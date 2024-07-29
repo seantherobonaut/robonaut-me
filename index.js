@@ -7,11 +7,11 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
-//Enables passing data to node
+//Middleware for processing incoming data (allows us to access request.body)    
 app.use(express.urlencoded({ extended:true }));
 app.use(express.json());
 
-//Static files
+//Middleware for Static files
 app.use(express.static('public'));
 
 app.get('/', (request, response)=>
