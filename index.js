@@ -30,6 +30,34 @@ app.get('/', (request, response)=>
     response.render('index', {title});
 });
 
+app.get('/page/:id', (request, response)=>
+{
+    response.setHeader('Content-Type', 'text/html');
+
+    //grab the "page"
+    let title = request.params.id;
+    title = title.toLocaleLowerCase();
+    console.log(title);
+
+    //fake database
+    let pages = ['home', 'about'];
+    let result = pages.includes(title);
+
+    console.log("result: "+result);
+
+    if(result)
+    {
+        if(result == "home")
+            res.redirect('/');
+        else
+            response.render('index', {title});
+    }
+    else
+    {
+        response.status(404).render('404', {title:'Not Found'});
+    }
+});
+
 app.use((request, response)=>
 {
     response.status(404).render('404', {title:'Not Found'});
