@@ -25,37 +25,35 @@ app.get('/', (request, response)=>
 {
     response.setHeader('Content-Type', 'text/html');
 
-    let title = 'Home';
+    let title = 'home';
 
     response.render('index', {title});
 });
 
-app.get('/page/:id', (request, response)=>
+app.get('/page/:id', (request, response, next)=>
 {
     response.setHeader('Content-Type', 'text/html');
 
-    //grab the "page"
+    //Grab the "page" name
     let title = request.params.id;
     title = title.toLocaleLowerCase();
     console.log(title);
 
-    //fake database
+    //Fake database
     let pages = ['home', 'about'];
     let result = pages.includes(title);
 
-    console.log("result: "+result);
-
+    //Check if page exists otherwise return 404
     if(result)
     {
-        if(result == "home")
-            res.redirect('/');
+        //Redirect to home if some joker puts in /page/home
+        if(title == "home")                    
+            response.redirect('/');
         else
             response.render('index', {title});
     }
     else
-    {
-        response.status(404).render('404', {title:'Not Found'});
-    }
+        next(); //404 response
 });
 
 app.use((request, response)=>
