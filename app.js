@@ -1,11 +1,4 @@
-//We probably don't need to explicitly import this unless it is needed
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 import express from 'express';
-import render from 'ejs'; //isn't always needed for basics
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,48 +12,49 @@ app.use(express.static('public'));
 
 //Templating Engine
 app.set('view engine', 'ejs');
-app.set('views', __dirname+'/views/');
+app.set('views', './views/');
 
+//Home page
 app.get('/', (request, response)=>
 {
-    response.setHeader('Content-Type', 'text/html');
+    let page = 'home';
+    console.log(`Accessing page: /${page}`);
 
-    let title = 'home';
-
-    response.render('index', {title});
+    response.render('index', {page});
 });
 
+//Content pages
 app.get('/page/:id', (request, response, next)=>
 {
-    response.setHeader('Content-Type', 'text/html');
+    //Grab the "page"
+    let page = request.params.id;
+    page = page.toLocaleLowerCase();
+    console.log(`Accessing page: /${page}`);
 
-    //Grab the "page" name
-    let title = request.params.id;
-    title = title.toLocaleLowerCase();
-    console.log(title);
-
-    //Fake database
+    //Fake database lookup
     let pages = ['home', 'about'];
-    let result = pages.includes(title);
+    let result = pages.includes(page);
 
     //Check if page exists otherwise return 404
     if(result)
     {
         //Redirect to home if some joker puts in /page/home
-        if(title == "home")                    
+        if(page == "home")                    
             response.redirect('/');
         else
-            response.render('index', {title});
+            response.render('index', {page});
     }
     else
         next(); //404 response
 });
 
+//404 Page
 app.use((request, response)=>
 {
     response.status(404).render('404', {title:'Not Found'});
 });
 
+//Start the server
 app.listen(PORT, ()=>
 {
     console.log(`Server is running on port ${PORT}...`);

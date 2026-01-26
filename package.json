@@ -1,26 +1,25 @@
 {
   "name": "robonaut-me",
   "version": "0.1.0",
-  "description": "My personal website remade",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "My personal website remade in NodeJs",
+  "homepage": "https://github.com/seantherobonaut/robonaut-me#readme",
+  "bugs": {
+    "url": "https://github.com/seantherobonaut/robonaut-me/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seantherobonaut/robonaut-me.git"
   },
+  "license": "ISC",
   "author": "Sean Leapley",
   "type": "module",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/seantherobonaut/robonaut-me/issues"
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/seantherobonaut/robonaut-me#readme",
   "dependencies": {
-    "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-ejs-layouts": "^2.5.1"
+    "ejs": "^4.0.1",
+    "express": "^5.2.1"
   }
 }
