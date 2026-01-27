@@ -1,7 +1,7 @@
 import express from 'express';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3010;
 
 //Middleware for processing incoming data (allows us to access request.body)    
 app.use(express.urlencoded({ extended:true }));
@@ -26,6 +26,8 @@ app.get('/', (request, response)=>
 //Content pages
 app.get('/page/:id', (request, response, next)=>
 {
+    let url = request.protocol+'://'+request.get('host');
+
     //Grab the "page"
     let page = request.params.id;
     page = page.toLocaleLowerCase();
@@ -42,7 +44,7 @@ app.get('/page/:id', (request, response, next)=>
         if(page == "home")                    
             response.redirect('/');
         else
-            response.render('index', {page});
+            response.render('index', {page, url});
     }
     else
         next(); //404 response
@@ -51,7 +53,7 @@ app.get('/page/:id', (request, response, next)=>
 //404 Page
 app.use((request, response)=>
 {
-    response.status(404).render('404', {title:'Not Found'});
+    response.status(404).render('404', {title:'Not Found', page:'404'});
 });
 
 //Start the server
