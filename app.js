@@ -18,7 +18,7 @@ app.set('views', './views/');
 app.get('/', (request, response)=>
 {
     let page = 'home';
-    console.log(`Accessing page: /${page}`);
+    console.log(`Accessing route: /${page}`);
 
     response.render('index', {page});
 });
@@ -29,7 +29,7 @@ app.get('/page/:id', (request, response, next)=>
     //Grab the "page"
     let page = request.params.id;
     page = page.toLocaleLowerCase();
-    console.log(`Accessing page: /${page}`);
+    console.log(`Accessing route: /${page}`);
 
     //Fake database lookup
     let pages = ['home', 'about'];
